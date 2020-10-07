@@ -1,0 +1,15 @@
+name: uni
+description: Universal Dart/Flutter package manager. A companion to `multipack`.
+version: 0.0.1
+homepage: https://github.com/gql-dart/uni
+environment: 
+  sdk: '>=2.8.0 <3.0.0'
+dependencies:
+  args: ^1.6.0
+  directed_graph: ^0.2.3
+  meta: ^1.0.0
+  process_run: ^0.11.0
+dev_dependencies: 
+  gql_pedantic: ^1.0.1
+executables:
+  uni: null
