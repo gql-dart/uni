@@ -3,4 +3,4 @@ library commands;
 
 import "package:meta/meta.dart";
 
-export "commands/doctor.dart";
+export "src/commands/doctor.dart";
