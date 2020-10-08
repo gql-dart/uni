@@ -1,5 +1,4 @@
 import "dart:async";
-import "dart:io" as io;
 
 import "package:args/command_runner.dart";
 import "package:uni/src/tool.dart";
@@ -32,15 +31,10 @@ class DoctorCommand extends Command<void> {
 
     for (final tool in tools) {
       if (!tool.isAvailable()) {
-        print(":( --> ${tool.name}");
+        print("[X] ${tool.name}");
         continue;
       }
-      print(":) --> ${tool.name}");
-      await tool.run(
-        ["--version"],
-        stdout: io.stdout,
-        stderr: io.stderr,
-      );
+      print("[√] ${tool.name}, version: ${await tool.getVersion()}");
     }
   }
 }
