@@ -1,5 +1,6 @@
 import "package:args/command_runner.dart";
 import "package:uni/commands.dart";
+import "package:uni/src/tooling.dart";
 
 void main(List<String> arguments) async {
   final runner = CommandRunner<void>(
@@ -8,22 +9,22 @@ void main(List<String> arguments) async {
   );
 
   runner.argParser.addOption(
-    "mode",
-    abbr: "m",
-    help: "Select tooling mode.",
-    valueHelp: "MODE",
-    defaultsTo: "adaptive",
+    "tooling",
+    abbr: "t",
+    help: "Select tooling.",
+    valueHelp: "TOOLING",
+    defaultsTo: const AdaptiveTooling().name,
     allowed: [
-      "adaptive",
-      "dart",
-      "flutter",
-      "legacy",
+      const AdaptiveTooling().name,
+      const DartTooling().name,
+      const FlutterTooling().name,
+      const LegacyTooling().name,
     ],
     allowedHelp: <String, String>{
-      "adaptive": "Selects tooling based on package.",
-      "dart": "Only use `dart` tool.",
-      "flutter": "Only use `flutter` tool.",
-      "legacy": "Only use legacy tooling.",
+      const AdaptiveTooling().name: const AdaptiveTooling().description,
+      const DartTooling().name: const DartTooling().description,
+      const FlutterTooling().name: const FlutterTooling().description,
+      const LegacyTooling().name: const LegacyTooling().description,
     },
   );
 

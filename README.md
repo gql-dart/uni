@@ -48,9 +48,9 @@ uni pub global activate uni
 - [ ] `uni run`: Run the program.
 - [ ] `uni test`: Run tests in this package.
 
-#### Modes
-Based on context `uni` chooses the appropriate tooling. This behavior can be overriden, by setting `--mode` flag.
-For example, `uni --mode <mode> pub`.  
+#### Tooling
+Based on context `uni` chooses the appropriate tooling. This behavior can be overriden, by setting `--tooling` flag.
+For example, `uni --tooling <TOOLING> pub`.  
 - `dart`: uses commands from `dart` command. `uni pub` -> `dart pub`
 - `flutter`: uses commands from `flutter` command.`uni pub` -> `flutter pub`
 - `legacy`: uses legacy tooling bundled with dart. `uni pub` -> `pub`
