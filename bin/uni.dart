@@ -29,6 +29,9 @@ void main(List<String> arguments) async {
   );
 
   runner.addCommand(DoctorCommand());
+  runner.addCommand(PubCommand());
+  runner.addCommand(AnalyzeCommand());
+  runner.addCommand(FormatCommand());
 
   await runner.run(arguments);
 }
