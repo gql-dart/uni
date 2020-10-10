@@ -39,12 +39,12 @@ uni pub global activate uni
 
 #### Available commands
 - [x] `uni doctor`: Show information about the installed tooling.
-- [ ] `uni analyze`: Analyze the project's Dart code.
+- [x] `uni analyze`: Analyze the project's Dart code.
 - [ ] `uni compile`: Compile Dart to various formats.
 - [ ] `uni create`: Create a new project.
-- [ ] `uni format`: Idiomatically format Dart source code.
+- [x] `uni format`: Idiomatically format Dart source code.
 - [ ] `uni migrate`: Perform a null safety migration on a project or package.
-- [ ] `uni pub`: Work with packages.
+- [x] `uni pub`: Work with packages.
 - [ ] `uni run`: Run the program.
 - [ ] `uni test`: Run tests in this package.
 

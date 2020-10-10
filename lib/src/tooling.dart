@@ -1,10 +1,23 @@
 import "package:pub_semver/pub_semver.dart";
+import "package:uni/src/context.dart";
+import "package:uni/src/tool.dart";
 import "package:uni/src/tools/dart_tool.dart";
 import "package:uni/src/tools/dartanalyzer_tool.dart";
 import "package:uni/src/tools/dartdoc_tool.dart";
 import "package:uni/src/tools/dartfmt_tool.dart";
 import "package:uni/src/tools/flutter_tool.dart";
 import "package:uni/src/tools/pub_tool.dart";
+import "package:uni/src/uni_commands.dart";
+
+class ToolConfig {
+  final Tool tool;
+  final List<String> args;
+
+  const ToolConfig({
+    this.tool,
+    this.args,
+  });
+}
 
 abstract class Tooling {
   final String name;
@@ -36,6 +49,11 @@ abstract class Tooling {
   }
 
   Future<bool> isSupported();
+
+  Future<ToolConfig> getToolFor(
+    UniCommand command,
+    Context context,
+  );
 }
 
 class AdaptiveTooling extends Tooling {
@@ -53,6 +71,50 @@ class AdaptiveTooling extends Tooling {
       ]).any(
         (supported) => supported,
       );
+
+  @override
+  Future<ToolConfig> getToolFor(
+    UniCommand command,
+    Context context,
+  ) async {
+    if (context is FlutterContext) {
+      if (await const FlutterTooling().isSupported()) {
+        return const FlutterTooling().getToolFor(
+          command,
+          context,
+        );
+      }
+
+      return null;
+    }
+
+    if (context is DartContext) {
+      if (await const DartTooling().isSupported()) {
+        return const DartTooling().getToolFor(
+          command,
+          context,
+        );
+      }
+
+      if (await const LegacyTooling().isSupported()) {
+        return const LegacyTooling().getToolFor(
+          command,
+          context,
+        );
+      }
+
+      if (await const FlutterTooling().isSupported()) {
+        return const FlutterTooling().getToolFor(
+          command,
+          context,
+        );
+      }
+
+      return null;
+    }
+
+    return null;
+  }
 }
 
 class DartTooling extends Tooling {
@@ -68,6 +130,23 @@ class DartTooling extends Tooling {
       VersionConstraint.parse("^2.10.0").allows(
         await const DartTool().getVersion(),
       );
+
+  @override
+  Future<ToolConfig> getToolFor(
+    UniCommand command,
+    Context context,
+  ) async {
+    if (context is DartContext) {
+      const dartTool = DartTool();
+
+      return ToolConfig(
+        tool: dartTool,
+        args: command.getArgsFor(dartTool),
+      );
+    }
+
+    return null;
+  }
 }
 
 class FlutterTooling extends Tooling {
@@ -79,6 +158,19 @@ class FlutterTooling extends Tooling {
 
   @override
   Future<bool> isSupported() async => const FlutterTool().isAvailable();
+
+  @override
+  Future<ToolConfig> getToolFor(
+    UniCommand command,
+    Context context,
+  ) async {
+    const flutterTool = FlutterTool();
+
+    return ToolConfig(
+      tool: flutterTool,
+      args: command.getArgsFor(flutterTool),
+    );
+  }
 }
 
 class LegacyTooling extends Tooling {
@@ -97,4 +189,41 @@ class LegacyTooling extends Tooling {
       ].every(
         (tool) => tool.isAvailable(),
       );
+
+  @override
+  Future<ToolConfig> getToolFor(
+    UniCommand command,
+    Context context,
+  ) async {
+    if (context is DartContext) {
+      if (command is PubCommand) {
+        const pubTool = PubTool();
+
+        return ToolConfig(
+          tool: pubTool,
+          args: command.getArgsFor(pubTool),
+        );
+      }
+
+      if (command is FormatCommand) {
+        const dartFmtTool = DartFmtTool();
+
+        return ToolConfig(
+          tool: dartFmtTool,
+          args: command.getArgsFor(dartFmtTool),
+        );
+      }
+
+      if (command is AnalyzeCommand) {
+        const dartAnalyzerTool = DartAnalyzerTool();
+
+        return ToolConfig(
+          tool: dartAnalyzerTool,
+          args: command.getArgsFor(dartAnalyzerTool),
+        );
+      }
+    }
+
+    return null;
+  }
 }
