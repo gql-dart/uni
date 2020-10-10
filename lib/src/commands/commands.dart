@@ -53,7 +53,7 @@ abstract class PassthroughCommand extends Command<void> {
       context,
     );
 
-    await conf.tool.run(
+    final result = await conf.tool.run(
       [
         ...conf.args,
         ...argResults.arguments,
@@ -61,6 +61,8 @@ abstract class PassthroughCommand extends Command<void> {
       stdout: stdout,
       stderr: stderr,
     );
+
+    exit(result.exitCode);
   }
 }
 
