@@ -1,6 +1,8 @@
 import "dart:async";
 
 import "package:args/command_runner.dart";
+import "package:ansi_styles/ansi_styles.dart";
+
 import "package:uni/src/context.dart";
 import "package:uni/src/tooling.dart";
 import "package:uni/src/tools/dart_tool.dart";
@@ -45,21 +47,11 @@ class DoctorCommand extends Command<void> {
     print("Available tools:");
     for (final tool in tools) {
       if (!tool.isAvailable()) {
-        print("[X] ${tool.name}");
+        print("${AnsiStyles.red("[!]")} ${AnsiStyles.bold(tool.name)}");
         continue;
       }
-      print("[√] ${tool.name}, version: ${await tool.getVersion()}");
-    }
-
-    print("");
-
-    print("Supported contexts: ");
-    for (final context in contexts) {
-      if (!await context.isSupported()) {
-        print("[X] ${context.name}");
-        continue;
-      }
-      print("[√] ${context.name}");
+      print(
+          "${AnsiStyles.green("[✓]")} ${AnsiStyles.bold(tool.name)}, version: ${await tool.getVersion()}");
     }
 
     print("");
@@ -67,10 +59,25 @@ class DoctorCommand extends Command<void> {
     print("Supported tooling: ");
     for (final tooling in toolingSet) {
       if (!await tooling.isSupported()) {
-        print("[X] ${tooling.name}");
+        print(
+            "${AnsiStyles.red("[!]")} ${AnsiStyles.bold(tooling.name)}: ${tooling.description}");
         continue;
       }
-      print("[√] ${tooling.name}");
+      print(
+          "${AnsiStyles.green("[✓]")} ${AnsiStyles.bold(tooling.name)}: ${tooling.description}");
+    }
+
+    print("");
+
+    print("Supported contexts: ");
+    for (final context in contexts) {
+      if (!await context.isSupported()) {
+        print(
+            "${AnsiStyles.red("[!]")} ${AnsiStyles.bold(context.name)}: ${context.description}");
+        continue;
+      }
+      print(
+          "${AnsiStyles.green("[✓]")} ${AnsiStyles.bold(context.name)}: ${context.description}");
     }
   }
 }

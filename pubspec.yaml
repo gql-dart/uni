@@ -5,6 +5,7 @@ homepage: https://github.com/gql-dart/uni
 environment:
   sdk: ">=2.8.0 <3.0.0"
 dependencies:
+  ansi_styles: ^0.1.1
   args: ^1.6.0
   directed_graph: ^0.2.3
   meta: ^1.0.0

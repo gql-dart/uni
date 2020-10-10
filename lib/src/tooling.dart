@@ -42,7 +42,7 @@ class AdaptiveTooling extends Tooling {
   const AdaptiveTooling()
       : super(
           name: "adaptive",
-          description: "Selects tooling based on package.",
+          description: "Use whatever tooling is available.",
         );
 
   @override
@@ -59,7 +59,7 @@ class DartTooling extends Tooling {
   const DartTooling()
       : super(
           name: "dart",
-          description: "Only use `dart` tool.",
+          description: "Only use `dart` tool. Requires version ^2.10.0.",
         );
 
   @override
