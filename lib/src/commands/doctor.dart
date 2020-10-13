@@ -44,6 +44,8 @@ class DoctorCommand extends Command<void> {
 
   @override
   FutureOr<void> run() async {
+    ansiStylesDisabled = false;
+
     print("Available tools:");
     for (final tool in tools) {
       if (!tool.isAvailable()) {
