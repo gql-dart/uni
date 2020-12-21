@@ -79,3 +79,20 @@ class FormatCommand extends UniCommand {
     return null;
   }
 }
+
+class TestCommand extends UniCommand {
+  const TestCommand()
+      : super(
+          name: "test",
+          description: "Run all the tests.",
+        );
+
+  @override
+  List<String> getArgsFor(Tool tool) {
+    if (tool is DartTool || tool is FlutterTool) {
+      return ["test"];
+    }
+
+    return null;
+  }
+}
