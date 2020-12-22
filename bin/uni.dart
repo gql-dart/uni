@@ -32,6 +32,7 @@ void main(List<String> arguments) async {
   runner.addCommand(PubCommand());
   runner.addCommand(AnalyzeCommand());
   runner.addCommand(FormatCommand());
+  runner.addCommand(TestCommand());
 
   await runner.run(arguments);
 }
