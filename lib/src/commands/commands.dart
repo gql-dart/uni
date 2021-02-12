@@ -77,3 +77,7 @@ class AnalyzeCommand extends PassthroughCommand {
 class FormatCommand extends PassthroughCommand {
   FormatCommand() : super(const uni.FormatCommand());
 }
+
+class TestCommand extends PassthroughCommand {
+  TestCommand() : super(const uni.TestCommand());
+}

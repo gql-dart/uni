@@ -46,7 +46,7 @@ uni pub global activate uni
 - [ ] `uni migrate`: Perform a null safety migration on a project or package.
 - [x] `uni pub`: Work with packages.
 - [ ] `uni run`: Run the program.
-- [ ] `uni test`: Run tests in this package.
+- [x] `uni test`: Run tests in this package.
 
 #### Tooling
 Based on context `uni` chooses the appropriate tooling. This behavior can be overriden, by setting `--tooling` flag.
